@@ -1,8 +1,16 @@
-const businessName = urlParams.get('business');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <script type="text/javascript">
+        // Get the phone, business name, and link from the query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const phone = urlParams.get('phone');
+        const businessName = urlParams.get('business');
         const link = urlParams.get('link'); // The link parameter
 
-        // Manually encode the message with line breaks
-        const message = `Hi - I hope you're having a great day! All of us at ${businessName} appreciate your business and would love to hear your thoughts.%0A%0AWould you be willing to write us a quick review by clicking the link below? It only takes a second and would be a huge help to us :)%0A%0A${link}`;
         // Construct the review message with line breaks
         const message = `Hi - I hope you're having a great day! All of us at ${businessName} appreciate your business and would love to hear your thoughts.\n\nWould you be willing to write us a quick review by clicking the link below? It only takes a second and would be a huge help to us :)`;
 
@@ -10,7 +18,6 @@ const businessName = urlParams.get('business');
         const encodedMessage = encodeURIComponent(message).replace(/%0A/g, '%0D%0A');
 
         // Construct the sms link
-        let smsLink = `sms:${phone}?body=${message}`;
         let smsLink = `sms:${phone}?body=${encodedMessage}`;
         if (link) {
             smsLink += `%0D%0A%0D%0A${encodeURIComponent(link)}`;
@@ -18,17 +25,20 @@ const businessName = urlParams.get('business');
 
         // Redirect to the sms link
         window.location.href = smsLink;
-@@ -29,10 +35,14 @@
+    </script>
+</head>
+<body>
+    <p>If you are not redirected, <a id="sms-link" href="#">click here</a>.</p>
+    <script type="text/javascript">
+        const urlParams = new URLSearchParams(window.location.search);
+        const phone = urlParams.get('phone');
         const businessName = urlParams.get('business');
         const link = urlParams.get('link');
 
-        // Manually encode the message with line breaks
-        const message = `Hi - I hope you're having a great day! All of us at ${businessName} appreciate your business and would love to hear your thoughts.%0A%0AWould you be willing to write us a quick review by clicking the link below? It only takes a second and would be a huge help to us :)%0A%0A${link}`;
         const message = `Hi - I hope you're having a great day! All of us at ${businessName} appreciate your business and would love to hear your thoughts.\n\nWould you be willing to write us a quick review by clicking the link below? It only takes a second and would be a huge help to us :)`;
 
         const encodedMessage = encodeURIComponent(message).replace(/%0A/g, '%0D%0A');
 
-        let smsLink = `sms:${phone}?body=${message}`;
         let smsLink = `sms:${phone}?body=${encodedMessage}`;
         if (link) {
             smsLink += `%0D%0A%0D%0A${encodeURIComponent(link)}`;
@@ -36,3 +46,4 @@ const businessName = urlParams.get('business');
         document.getElementById('sms-link').href = smsLink;
     </script>
 </body>
+</html>
