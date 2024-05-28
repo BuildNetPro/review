@@ -33,8 +33,8 @@
                 smsLink = `sms:${phone}?body=${encodedMessage}`;
             }
 
-            // Set the href attribute of the link
-            document.getElementById('sms-link').href = smsLink;
+            // Redirect to the sms link automatically
+            window.location.href = smsLink;
         });
     </script>
 </head>
