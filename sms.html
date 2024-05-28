@@ -5,45 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting...</title>
     <script type="text/javascript">
-        // Get the phone, business name, and link from the query parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const phone = urlParams.get('phone');
-        const businessName = urlParams.get('business');
-        const link = urlParams.get('link'); // The link parameter
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the phone, business name, and link from the query parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const phone = urlParams.get('phone');
+            const businessName = urlParams.get('business');
+            const link = urlParams.get('link'); // The link parameter
 
-        // Construct the review message with line breaks
-        const message = `Hi! I hope you're having a great day. All of us at ${businessName} appreciate your business and would love to hear your feedback.\n\nWould you be willing to give us a quick rating by clicking the link below? It only takes a second and would be a huge help to us :)`;
+            // Construct the review message with line breaks
+            const message = `Hi! I hope you're having a great day. All of us at ${businessName} appreciate your business and would love to hear your feedback.\n\nWould you be willing to give us a quick rating by clicking the link below? It only takes a second and would be a huge help to us :)`;
 
-        // Manually encode the message to ensure line breaks
-        const encodedMessage = encodeURIComponent(message).replace(/%0A/g, '%0D%0A');
+            // Manually encode the message to ensure line breaks
+            const encodedMessage = encodeURIComponent(message).replace(/%0A/g, '%0D%0A');
 
-        // Construct the sms link
-        let smsLink = `sms:${phone}?body=${encodedMessage}`;
-        if (link) {
-            smsLink += `%0D%0A%0D%0A${encodeURIComponent(link)}`;
-        }
+            // Construct the sms link
+            let smsLink = `sms:${phone}?body=${encodedMessage}`;
+            if (link) {
+                smsLink += `%0D%0A%0D%0A${encodeURIComponent(link)}`;
+            }
 
-        // Redirect to the sms link
-        window.location.href = smsLink;
+            // Set the href attribute of the link
+            document.getElementById('sms-link').href = smsLink;
+        });
     </script>
 </head>
 <body>
     <p>If you are not redirected, <a id="sms-link" href="#">click here</a>.</p>
-    <script type="text/javascript">
-        const urlParams = new URLSearchParams(window.location.search);
-        const phone = urlParams.get('phone');
-        const businessName = urlParams.get('business');
-        const link = urlParams.get('link');
-
-        const message = `Hi! I hope you're having a great day. All of us at ${businessName} appreciate your business and would love to hear your feedback.\n\nWould you be willing to give us a quick rating by clicking the link below? It only takes a second and would be a huge help to us :)`;
-
-        const encodedMessage = encodeURIComponent(message).replace(/%0A/g, '%0D%0A');
-
-        let smsLink = `sms:${phone}?body=${encodedMessage}`;
-        if (link) {
-            smsLink += `%0D%0A%0D%0A${encodeURIComponent(link)}`;
-        }
-        document.getElementById('sms-link').href = smsLink;
-    </script>
 </body>
 </html>
