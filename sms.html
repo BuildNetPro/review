@@ -18,8 +18,20 @@
             // Manually encode the message to ensure line breaks
             const encodedMessage = encodeURIComponent(message) + '%0D%0A%0D%0A' + encodeURIComponent(link);
 
-            // Construct the sms link
-            const smsLink = `sms:${encodeURIComponent(phone)}&body=${encodedMessage}`;
+            // Detect the user's platform
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            let smsLink;
+
+            if (/android/i.test(userAgent)) {
+                // For Android
+                smsLink = `sms:${phone}?body=${encodedMessage}`;
+            } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                // For iOS
+                smsLink = `sms:${phone}&body=${encodedMessage}`;
+            } else {
+                // Default fallback
+                smsLink = `sms:${phone}?body=${encodedMessage}`;
+            }
 
             // Set the href attribute of the link
             document.getElementById('sms-link').href = smsLink;
